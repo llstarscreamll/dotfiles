@@ -82,3 +82,4 @@ export PYTHONIOENCODING="UTF-8"
 # Make openvpn binary available.
 
 export PATH=$(brew --prefix openvpn)/sbin:$PATH
+export PATH=$HOME/.composer/vendor/bin:$PATH

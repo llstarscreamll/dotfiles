@@ -60,8 +60,11 @@ alias o="open"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # PHP7.3 binary alias.
-
-alias php7.3=/usr/local/Cellar/php@7.3/7.3.24/bin/php
+PHP73_VERSION=$(ls -d /usr/local/Cellar/php@7.3/* | head -n 1)
+alias php7.3=$PHP73_VERSION/bin/php
+# PHP7.4 binary alias.
+PHP73_VERSION=$(ls -d /usr/local/Cellar/php@7.4/* | head -n 1)
+alias php7.4=$PHP73_VERSION/bin/php
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

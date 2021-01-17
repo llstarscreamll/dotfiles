@@ -13,6 +13,7 @@ brew_install "OpenVpn" "openvpn"
 brew_install "Slack" "slack" "homebrew/cask" "cask"
 brew_install "iTerm2" "iterm2" "homebrew/cask" "cask"
 brew_install "TablePlus" "tableplus" "homebrew/cask" "cask"
+brew_install "Postman" "postman" "homebrew/cask" "cask"
 open "macappstores://itunes.apple.com/en/app/todoist-lista-de-tareas/id585829637"
 
 if [ -d "$HOME/.nvm" ]; then
