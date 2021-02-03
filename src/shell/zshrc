@@ -9,7 +9,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source /usr/local/share/antigen/antigen.zsh
+source ~/.antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -36,6 +36,6 @@ antigen apply
 [ -n "$PS1" ] \
     && . ~/.bash_profile
 
-export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
-export PATH=~/go/bin:$PATH
+# export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
+# export PATH=~/go/bin:$PATH
 # export PATH=/usr/local/opt/node@10/bin:$PATH

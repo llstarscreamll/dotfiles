@@ -79,7 +79,20 @@ export PYTHONIOENCODING="UTF-8"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Make openvpn binary available.
+# Make openvpn binary available in Mac
 
-export PATH=$(brew --prefix openvpn)/sbin:$PATH
-export PATH=$HOME/.composer/vendor/bin:$PATH
+if [[ $OS == "macos" ]]; then
+	export PATH=$(brew --prefix openvpn)/sbin:$PATH
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Add composer to path
+
+if [[ $OS == "ubuntu" ]]; then
+	export PATH=$HOME/.config/composer/vendor/bin:$PATH
+fi
+
+if [[ $OS == "macos" ]]; then
+	export PATH=$HOME/.composer/vendor/bin:$PATH
+fi

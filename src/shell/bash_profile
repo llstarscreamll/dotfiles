@@ -20,7 +20,6 @@ source_bash_files() {
 
     cd "$(dirname "$(readlink "${(%):-%x}")")" \
         && . "../os/utils.sh"
-    
 
     # shellcheck disable=SC2034
     declare -r OS="$(get_os)"
@@ -52,4 +51,4 @@ unset -f source_bash_files
 # Clear system messages (system copyright notice, the date
 # and time of the last login, the message of the day, etc.).
 
-clear
+# clear

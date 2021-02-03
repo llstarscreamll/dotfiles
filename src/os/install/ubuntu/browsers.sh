@@ -25,10 +25,9 @@ fi
 
 install_package "Chrome Canary" "google-chrome-unstable"
 install_package "Chromium" "chromium-browser"
+install_package "Chrome Stable" "google-chrome-stable"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-printf "\n"
 
 if ! package_is_installed "firefox-trunk"; then
 
@@ -41,3 +40,4 @@ if ! package_is_installed "firefox-trunk"; then
 fi
 
 install_package "Firefox Nightly" "firefox-trunk"
+

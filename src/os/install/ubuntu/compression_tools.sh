@@ -10,3 +10,4 @@ print_in_purple "\n   Compression Tools\n\n"
 
 install_package "Brotli" "brotli"
 install_package "Zopfli" "zopfli"
+install_package "Unrar" "unrar"
