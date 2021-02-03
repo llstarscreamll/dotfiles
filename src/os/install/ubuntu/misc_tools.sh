@@ -13,6 +13,7 @@ install_package "ShellCheck" "shellcheck"
 install_package "Xclip" "xclip"
 install_package "Telegram" "telegram-desktop"
 install_package "Tilix" "tilix"
+install_package "Gnome Tweak" "gnome-tweaks"
 execute "sudo snap install slack --classic" "Slack"
 
 if [ -d "$HOME/.nvm" ]; then
