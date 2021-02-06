@@ -21,7 +21,7 @@ Reboot again and install only what is strictly needed, in this case Basic Vanill
 sudo apt install gnome-session gdm3
 ```
 
-The execute this dotfiles:
+Then execute this dotfiles:
 
 ```bash
 bash -c "$(wget -qO - https://raw.github.com/llstarscreamll/dotfiles/main/src/os/setup.sh)"
