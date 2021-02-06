@@ -16,6 +16,7 @@ upgrade
 ./browsers.sh
 ./compression_tools.sh
 ./misc.sh
+./fonts.sh
 ./misc_tools.sh
 ./../npm.sh
 ./php.sh
