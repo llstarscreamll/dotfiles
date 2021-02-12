@@ -15,6 +15,17 @@ GRUB_CMDLINE_LINUX_DEFAULT="pci=nommconf"
 sudo update-grub
 ```
 
+Change netplan settings to make optional the connection on ethernet port:
+```yaml
+# file located on /etc/netplan/00-installer-config.yaml or similar
+network:
+	ethernets:
+		enp3s0:
+			optional: true
+			dhcp4: true
+	version: 2
+```
+
 Reboot again and install only what is strictly needed, in this case Basic Vanilla Gnome:
 
 ```bash
