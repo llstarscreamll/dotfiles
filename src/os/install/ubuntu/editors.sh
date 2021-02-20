@@ -27,7 +27,7 @@ install_package "VS Code" "code"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if ! package_is_installed "subl"; then
+if ! package_is_installed "sublime-text"; then
 
     add_key "https://download.sublimetext.com/sublimehq-pub.gpg" \
         || print_error "Sublime Text (add key)"
