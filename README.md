@@ -4,13 +4,13 @@ DotFiles for Mac and Ubuntu inspired on [alrra/dotfiles](https://github.com/alrr
 
 ## Fixes for Asus TUF Gaming laptop
 
-Install ubuntu server from booteable USB drive with no swap partition, reboot and fix errors given by Western Digilal Black Label SSD:
+Install ubuntu server from booteable USB drive with no swap partition, reboot and fix errors given by Western Digilal Black Label SSD and other audio devices:
 
 ```bash
 # edit the grub config file 
 sudo vim /etc/default/grub
 # set GRUB_CMDLINE_LINUX_DEFAULT entry to:
-GRUB_CMDLINE_LINUX_DEFAULT="pci=nommconf"
+GRUB_CMDLINE_LINUX_DEFAULT="pci=nommconf snd_hda_intel.dmic_detect=0"
 # and reinstall grub
 sudo update-grub
 ```
@@ -26,7 +26,7 @@ network:
 	version: 2
 ```
 
-Reboot again and install only what is strictly needed, to start Basic Vanilla Gnome:
+Save the file and execute `sudo netplan apply`. Reboot again and install only what is strictly needed, to start Basic Vanilla Gnome:
 
 ```bash
 sudo apt install gnome-session gdm3
