@@ -8,21 +8,12 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 print_in_purple "\n   Miscellaneous Tools\n\n"
 
-install_package "Gnome Logs" "gnome-logs"
-install_package "Gnome Calulator" "gnome-calculator"
-install_package "Gnome Tweak" "gnome-tweaks"
-install_package "Gnome Software" "gnome-software"
-install_package "Gnome System Monitor" "gnome-system-monitor"
-install_package "Gnome Snap Plugin" "gnome-software-plugin-snap"
-install_package "Nautilis" "nautilus"
 install_package "cURL" "curl"
 install_package "Xclip" "xclip"
 install_package "Tilix" "tilix"
 install_package "Telegram" "telegram-desktop"
 execute "sudo snap install slack --classic" "Slack"
 execute "sudo snap install datagrip --classic" "DataGrip"
-install_package "Ubuntu Drivers" "ubuntu-drivers-common"
-execute "sudo ubuntu-drivers install" "Install Drivers"
 install_package "Libre Office" "libreoffice"
 
 if [ -d "$HOME/.nvm" ]; then
