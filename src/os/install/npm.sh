@@ -24,6 +24,7 @@ main() {
     install_npm_package "Serverless" "serverless"
     install_npm_package "Firebase Tools" "firebase-tools"
     install_npm_package "Angular CLI" "@angular/cli"
+    install_npm_package "NX CLI" "nx"
     install_npm_package "NG TailwindCss" "ng-tailwindcss"
 
 }
