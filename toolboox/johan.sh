@@ -26,3 +26,5 @@ sudo dnf install -y make
 print "Install GitFlow"
 wget -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh && sudo bash gitflow-installer.sh install develop; rm gitflow-installer.sh
 
+print "Install compilers"
+sudo dnf install -y gcc gcc-c++ python3-devel
