@@ -12,7 +12,8 @@ sudo rpm-ostree upgrade --reboot
 print "Install Flatpaks"
 flatpak install -y flathub com.visualstudio.code \
     org.telegram.desktop \
-    com.google.Chrome
+    com.google.Chrome \
+    com.slack.Slack
 
 print "Add permissions to Chrome Flatpak"
 flatpak override --user --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome
@@ -35,8 +36,7 @@ mkdir -p ~/.bashrc.d
 cp -r config/bash/* ~/.bashrc.d/
 
 print "Create default Toolbox containers"
-toolbox create johan
-toolbox create ubits
+toolbox create johan --assumeyes
 
 print "Checking fonts directory"
 FONTS_DIR=~/.local/share/fonts
