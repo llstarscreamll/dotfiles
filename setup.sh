@@ -69,7 +69,7 @@ if [ ! -f ~/.ssh/johan.pub ]; then
     ssh-keygen -C "llstarscreamll@hotmail.com" -f ~/.ssh/johan -N ""
     ssh-add ~/.ssh/johan
 
-    echo "Add the following public key to your GitHub account:"
+    print "Add the following public key to your GitHub account:"
     cat ~/.ssh/johan.pub
 fi
 
