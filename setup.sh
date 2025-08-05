@@ -64,6 +64,32 @@ if [ -z "$(ls -A $FONTS_DIR 2>/dev/null)" ]; then
     fc-cache -f -v
 fi
 
+print "Install Cursor IDE"
+
+curl -L -o Cursor.AppImage https://downloads.cursor.com/production/54c27320fab08c9f5dd5873f07fca101f7a3e076/linux/x64/Cursor-1.3.9-x86_64.AppImage
+chmod +x Cursor.AppImage
+mv Cursor.AppImage ~/.local/bin/cursor
+
+print "Creating Cursor desktop entry"
+
+mkdir -p ~/.local/share/applications
+cat > ~/.local/share/applications/cursor.desktop << EOL
+[Desktop Entry]
+Name=Cursor IDE
+Comment=AI-powered IDE for developers
+Exec=~/.local/bin/cursor
+Icon=cursor
+Terminal=false
+Type=Application
+Categories=Development;IDE;
+Keywords=cursor;code;programming;editor;
+StartupWMClass=Cursor
+EOL
+
+# Download an icon for Cursor
+mkdir -p ~/.local/share/icons
+curl -L -o ~/.local/share/icons/cursor.png https://paulstamatiou.com/_next/image?url=%2Fgear%2Fcursor-app-icon.png\&w=3840\&q=75
+
 if [ ! -f ~/.ssh/johan.pub ]; then
     print "Generate SSH key"
     ssh-keygen -C "llstarscreamll@hotmail.com" -f ~/.ssh/johan -N ""
