@@ -105,5 +105,12 @@ if [ ! -f ~/.local/share/jetbrains-toolbox ]; then
     tar -xvf jetbrains-toolbox.tar.gz -C ~/.local/share/
     mv ~/.local/share/jetbrains-toolbox-2.7.0.48109/ ~/.local/share/jetbrains-toolbox
     rm jetbrains-toolbox.tar.gz
-    ~/.local/share/jetbrains-toolbox/bin/jetbrains-toolbox
+    ~/.local/share/jetbrains-toolbox/bin/jetbrains-toolbox &
 fi
+
+print "Install Konsole Catppuccin theme"
+
+git clone https://github.com/catppuccin/konsole.git theme
+mkdir -p ~/.local/share/konsole
+cp theme/themes/*.colorscheme ~/.local/share/konsole/
+rm -rf theme
