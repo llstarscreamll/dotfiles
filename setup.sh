@@ -7,21 +7,36 @@ source ./utils.sh
 PROJECT_DIR=$(pwd)
 
 print "Update system packages"
-sudo rpm-ostree upgrade --reboot
+flatpak update -y
+dnf check-update
+sudo dnf update -y
+
+print "Install VSCode"
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+
+dnf check-update
+sudo dnf install code -y
+
+print "Install Sublime Text"
+sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+sudo dnf config-manager addrepo --from-repofile=https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+dnf check-update
+sudo dnf install sublime-text -y
+
+print "Install codecs and Mesa drivers"
+sudo dnf mesa-va-drivers-freeworld mesa-vdpau-drivers-freeworld -y
+sudo dnf group install multimedia -y
 
 print "Install Flatpaks"
-flatpak install -y flathub com.visualstudio.code \
-    org.telegram.desktop \
+flatpak install -y flathub org.telegram.desktop \
     com.google.Chrome \
     com.slack.Slack
 
 print "Add permissions to Chrome Flatpak"
 flatpak override --user --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome
 
-print "Add D-Bus session permissions to VS Code"
-flatpak override --user --talk-name=org.kde.kwalletd6 com.visualstudio.code
-
-print "Make code command available on configure it to use Toolbox"
+print "Make code command available and configure it to use Toolbox"
 mkdir -p ~/Code
 cd ~/Code
 git clone https://github.com/owtaylor/toolbox-vscode.git
@@ -36,7 +51,7 @@ mkdir -p ~/.bashrc.d
 cp -r config/bash/* ~/.bashrc.d/
 
 print "Create default Toolbox containers"
-toolbox create johan --assumeyes
+toolbox create --assumeyes
 
 print "Checking fonts directory"
 FONTS_DIR=~/.local/share/fonts
@@ -64,31 +79,33 @@ if [ -z "$(ls -A $FONTS_DIR 2>/dev/null)" ]; then
     fc-cache -f -v
 fi
 
-print "Install Cursor IDE"
+if [ ! -f ~/.local/bin/cursor ]; then
+    print "Install Cursor IDE"
 
-curl -L -o Cursor.AppImage https://downloads.cursor.com/production/54c27320fab08c9f5dd5873f07fca101f7a3e076/linux/x64/Cursor-1.3.9-x86_64.AppImage
-chmod +x Cursor.AppImage
-mv Cursor.AppImage ~/.local/bin/cursor
+    curl -L -o Cursor.AppImage https://downloads.cursor.com/production/54c27320fab08c9f5dd5873f07fca101f7a3e076/linux/x64/Cursor-1.3.9-x86_64.AppImage
+    chmod +x Cursor.AppImage
+    mv Cursor.AppImage ~/.local/bin/cursor
 
-print "Creating Cursor desktop entry"
+    # Download an icon for Cursor
+    mkdir -p ~/.local/share/icons
+    curl -L -o ~/.local/share/icons/cursor.png https://paulstamatiou.com/_next/image?url=%2Fgear%2Fcursor-app-icon.png\&w=3840\&q=75
 
-mkdir -p ~/.local/share/applications
-cat > ~/.local/share/applications/cursor.desktop << EOL
-[Desktop Entry]
-Name=Cursor IDE
-Comment=AI-powered IDE for developers
-Exec=~/.local/bin/cursor
-Icon=cursor
-Terminal=false
-Type=Application
-Categories=Development;IDE;
-Keywords=cursor;code;programming;editor;
-StartupWMClass=Cursor
+    # Create desktop entry
+    mkdir -p ~/.local/share/applications
+    cat > ~/.local/share/applications/cursor.desktop << EOL
+    [Desktop Entry]
+    Name=Cursor IDE
+    Comment=AI-powered IDE for developers
+    Exec="$HOME/.local/bin/cursor"
+    Icon="$HOME/.local/share/icons/cursor.png"
+    Terminal=false
+    Type=Application
+    Categories=Development;IDE;
+    Keywords=cursor;code;programming;editor;
+    StartupWMClass=Cursor
 EOL
+fi
 
-# Download an icon for Cursor
-mkdir -p ~/.local/share/icons
-curl -L -o ~/.local/share/icons/cursor.png https://paulstamatiou.com/_next/image?url=%2Fgear%2Fcursor-app-icon.png\&w=3840\&q=75
 
 if [ ! -f ~/.ssh/johan.pub ]; then
     print "Generate SSH key"
@@ -108,9 +125,15 @@ if [ ! -f ~/.local/share/jetbrains-toolbox ]; then
     ~/.local/share/jetbrains-toolbox/bin/jetbrains-toolbox &
 fi
 
-print "Install Konsole Catppuccin theme"
+if [[ $XDG_CURRENT_DESKTOP == *"KDE"* ]]; then
+    print "Add KDE settings"
+    
+    print "Konsole theme"
+    git clone https://github.com/catppuccin/konsole.git theme
+    mkdir -p ~/.local/share/konsole
+    cp theme/themes/*.colorscheme ~/.local/share/konsole/
+    rm -rf theme
 
-git clone https://github.com/catppuccin/konsole.git theme
-mkdir -p ~/.local/share/konsole
-cp theme/themes/*.colorscheme ~/.local/share/konsole/
-rm -rf theme
+    print "Add D-Bus session permissions to VS Code"
+    flatpak override --user --talk-name=org.kde.kwalletd6 com.visualstudio.code
+fi
