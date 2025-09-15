@@ -25,7 +25,7 @@ sudo dnf install -y make
 
 print "Install GitFlow"
 curl --silent --location  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/master/contrib/gitflow-installer.sh --output ./gitflow-installer.sh
-sudo bash gitflow-installer.sh install develop
+sudo bash gitflow-installer.sh install stable
 rm gitflow-installer.sh
 sudo rm -rf gitflow
 
