@@ -137,3 +137,8 @@ if [[ $XDG_CURRENT_DESKTOP == *"KDE"* ]]; then
     print "Add D-Bus session permissions to VS Code"
     flatpak override --user --talk-name=org.kde.kwalletd6 com.visualstudio.code
 fi
+
+print "Install ZSH"
+sudo dnf install -y zsh
+chsh -s $(which zsh)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
