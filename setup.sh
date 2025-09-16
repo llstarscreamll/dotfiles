@@ -49,6 +49,7 @@ cd $PROJECT_DIR
 print "Copy bash config files"
 mkdir -p ~/.bashrc.d
 cp -r config/bash/* ~/.bashrc.d/
+cp config/zsh/zshrc ~/.zshrc
 
 print "Create default Toolbox containers"
 toolbox create --assumeyes
