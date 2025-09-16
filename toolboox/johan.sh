@@ -24,10 +24,11 @@ print "Install Make"
 sudo dnf install -y make
 
 print "Install GitFlow"
+export PREFIX=~/.local
 curl --silent --location  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/master/contrib/gitflow-installer.sh --output ./gitflow-installer.sh
-sudo bash gitflow-installer.sh install stable
+bash gitflow-installer.sh install stable
 rm gitflow-installer.sh
-sudo rm -rf gitflow
+rm -rf gitflow
 
 print "Install compilers"
 sudo dnf install -y gcc gcc-c++ python3-devel
