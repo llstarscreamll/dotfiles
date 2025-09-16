@@ -51,6 +51,14 @@ mkdir -p ~/.bashrc.d
 cp -r config/bash/* ~/.bashrc.d/
 cp config/zsh/zshrc ~/.zshrc
 
+print "Install Vim"
+sudo dnf install -y vim
+
+print "Enable vim colors and set as default editor"
+echo "syntax on" >> ~/.vimrc
+echo "set background=dark" >> ~/.vimrc
+echo "colorscheme gruvbox" >> ~/.vimrc
+
 print "Create default Toolbox containers"
 toolbox create --assumeyes
 
