@@ -14,7 +14,6 @@ sudo dnf update -y
 print "Install VSCode"
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-
 dnf check-update
 sudo dnf install code -y
 
@@ -25,7 +24,6 @@ dnf check-update
 sudo dnf install sublime-text -y
 
 print "Install codecs and Mesa drivers"
-sudo dnf mesa-va-drivers-freeworld mesa-vdpau-drivers-freeworld -y
 sudo dnf group install multimedia -y
 
 print "Install Flatpaks"
@@ -36,13 +34,13 @@ flatpak install -y flathub org.telegram.desktop \
 print "Add permissions to Chrome Flatpak"
 flatpak override --user --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome
 
-print "Make code command available and configure it to use Toolbox"
-mkdir -p ~/Code
-cd ~/Code
-git clone https://github.com/owtaylor/toolbox-vscode.git
-cd toolbox-vscode
-[ -d ~/.local/bin ] || mkdir ~/.local/bin
-ln -s "$PWD/code.sh" ~/.local/bin/code
+# print "Make code command available and configure it to use Toolbox"
+# mkdir -p ~/Code
+# cd ~/Code
+# git clone https://github.com/owtaylor/toolbox-vscode.git
+# cd toolbox-vscode
+# [ -d ~/.local/bin ] || mkdir ~/.local/bin
+# ln -s "$PWD/code.sh" ~/.local/bin/code
 
 cd $PROJECT_DIR
 
@@ -57,7 +55,6 @@ sudo dnf install -y vim
 print "Enable vim colors and set as default editor"
 echo "syntax on" >> ~/.vimrc
 echo "set background=dark" >> ~/.vimrc
-echo "colorscheme gruvbox" >> ~/.vimrc
 
 print "Create default Toolbox containers"
 toolbox create --assumeyes
