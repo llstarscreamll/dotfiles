@@ -105,6 +105,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias c='clear'
 alias q='exit'
+alias u='sudo dnf update -y && flatpak update -y && npm -g update'
 
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/bin/vim
