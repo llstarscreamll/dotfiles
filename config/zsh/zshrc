@@ -110,6 +110,13 @@ alias u='sudo dnf update -y && flatpak update -y && npm -g update'
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/bin/vim
 
+# Add Golang to PATH if installed
+if [ -d "$HOME/.local/bin/go" ]; then
+  export GOROOT="$HOME/.local/bin/go"
+  export GOPATH="$HOME/.go"
+  export PATH="$PATH:$GOROOT/bin"
+fi
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

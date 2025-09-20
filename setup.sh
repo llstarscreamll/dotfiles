@@ -44,11 +44,6 @@ flatpak override --user --filesystem=~/.local/share/applications --filesystem=~/
 
 cd $PROJECT_DIR
 
-print "Copy bash config files"
-mkdir -p ~/.bashrc.d
-cp -r config/bash/* ~/.bashrc.d/
-cp config/zsh/zshrc ~/.zshrc
-
 print "Install Vim"
 sudo dnf install -y vim
 
@@ -90,6 +85,7 @@ if [ ! -f ~/.local/bin/cursor ]; then
 
     curl -L -o Cursor.AppImage https://downloads.cursor.com/production/54c27320fab08c9f5dd5873f07fca101f7a3e076/linux/x64/Cursor-1.3.9-x86_64.AppImage
     chmod +x Cursor.AppImage
+    mkdir -p ~/.local/bin
     mv Cursor.AppImage ~/.local/bin/cursor
 
     # Download an icon for Cursor
@@ -148,3 +144,26 @@ print "Install ZSH"
 sudo dnf install -y zsh
 chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+source ~/.zshrc
+
+print "Copy bash config files"
+mkdir -p ~/.bashrc.d
+cp -r config/bash/* ~/.bashrc.d/
+cp config/zsh/zshrc ~/.zshrc
+
+print "Install NVM"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+source ~/.zshrc
+
+print "Install Node and global packages"
+nvm install 20
+npm install --global nx @angular/cli firebase-tools aws-cdk ts-node prettier
+nvm install 22
+nvm use 22
+npm install --global nx @angular/cli firebase-tools aws-cdk ts-node prettier
+
+print "Install Golang"
+curl -LO https://dl.google.com/go/go1.24.5.linux-amd64.tar.gz
+mkdir -p ~/.local/bin
+tar -C ~/.local/bin -xzf go1.24.5.linux-amd64.tar.gz
+rm -rf go1.24.5.linux-amd64.tar.gz

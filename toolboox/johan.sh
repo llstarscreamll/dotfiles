@@ -11,13 +11,12 @@ source ~/.bashrc
 print "Install Vim"
 sudo dnf install -y vim
 
-print "Install Node 22 and global packages"
+print "Install Node and global packages"
 nvm install 22
 nvm use 22
 npm install --global nx @angular/cli firebase-tools aws-cdk ts-node prettier
 
 print "Install Golang"
-
 curl -LO https://dl.google.com/go/go1.24.5.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.24.5.linux-amd64.tar.gz
 source ~/.bashrc
