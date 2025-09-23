@@ -29,7 +29,8 @@ sudo dnf group install multimedia -y
 print "Install Flatpaks"
 flatpak install -y flathub org.telegram.desktop \
     com.google.Chrome \
-    com.slack.Slack
+    com.slack.Slack \
+    org.mozilla.Thunderbird
 
 print "Add permissions to Chrome Flatpak"
 flatpak override --user --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome
@@ -167,3 +168,10 @@ curl -LO https://dl.google.com/go/go1.24.5.linux-amd64.tar.gz
 mkdir -p ~/.local/bin
 tar -C ~/.local/bin -xzf go1.24.5.linux-amd64.tar.gz
 rm -rf go1.24.5.linux-amd64.tar.gz
+
+print "Install GitFlow"
+export PREFIX=~/.local
+curl --silent --location  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/master/contrib/gitflow-installer.sh --output ./gitflow-installer.sh
+bash gitflow-installer.sh install stable
+rm gitflow-installer.sh
+rm -rf gitflow

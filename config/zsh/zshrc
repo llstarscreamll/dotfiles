@@ -109,6 +109,7 @@ alias u='sudo dnf update -y && flatpak update -y && npm -g update'
 
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/bin/vim
+export PATH="$PATH:$HOME/.local/bin"
 
 # Add Golang to PATH if installed
 if [ -d "$HOME/.local/bin/go" ]; then
