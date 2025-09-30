@@ -175,3 +175,15 @@ curl --silent --location  https://raw.githubusercontent.com/petervanderdoes/gitf
 bash gitflow-installer.sh install stable
 rm gitflow-installer.sh
 rm -rf gitflow
+
+print "Install AWS VPN Client"
+sudo dnf copr enable vorona/aws-rpm-packages -y
+sudo dnf install awsvpnclient -y
+sudo systemctl enable awsvpnclient
+sudo systemctl start awsvpnclient
+
+print "Install AWS CLI"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+./aws/install -i ~/.local/aws-cli -b ~/.local/bin
+rm -rf ./aws awscliv2.zip
