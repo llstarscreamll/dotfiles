@@ -1,0 +1,21 @@
+[user]
+    name = "Johan Alvarez"
+    email = "llstarscreamll@hotmail.com"
+
+[core]
+    editor = vim
+
+[init]
+    defaultBranch = master
+
+[pull]
+    rebase = true
+
+[fetch]
+    prune = true
+
+[color]
+    ui = auto
+
+[includeIf "gitdir:~/Code/Ubits/"]
+	path = /home/johan/.gitconfig-ubits

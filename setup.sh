@@ -27,21 +27,7 @@ print "Install codecs and Mesa drivers"
 sudo dnf group install multimedia -y
 
 print "Install Flatpaks"
-flatpak install -y flathub org.telegram.desktop \
-    com.google.Chrome \
-    com.slack.Slack \
-    org.mozilla.Thunderbird
-
-print "Add permissions to Chrome Flatpak"
-flatpak override --user --filesystem=~/.local/share/applications --filesystem=~/.local/share/icons com.google.Chrome
-
-# print "Make code command available and configure it to use Toolbox"
-# mkdir -p ~/Code
-# cd ~/Code
-# git clone https://github.com/owtaylor/toolbox-vscode.git
-# cd toolbox-vscode
-# [ -d ~/.local/bin ] || mkdir ~/.local/bin
-# ln -s "$PWD/code.sh" ~/.local/bin/code
+flatpak install -y flathub org.telegram.desktop com.slack.Slack
 
 cd $PROJECT_DIR
 
@@ -109,16 +95,6 @@ if [ ! -f ~/.local/bin/cursor ]; then
 EOL
 fi
 
-
-if [ ! -f ~/.ssh/johan.pub ]; then
-    print "Generate SSH key"
-    ssh-keygen -C "llstarscreamll@hotmail.com" -f ~/.ssh/johan -N ""
-    ssh-add ~/.ssh/johan
-
-    print "Add the following public key to your GitHub account:"
-    cat ~/.ssh/johan.pub
-fi
-
 if [ ! -f ~/.local/share/jetbrains-toolbox ]; then
     print "Install Jetbrains Toolbox"
     curl -L -o jetbrains-toolbox.tar.gz https://download-cdn.jetbrains.com/toolbox/jetbrains-toolbox-2.7.0.48109.tar.gz
@@ -141,33 +117,9 @@ if [[ $XDG_CURRENT_DESKTOP == *"KDE"* ]]; then
     flatpak override --user --talk-name=org.kde.kwalletd6 com.visualstudio.code
 fi
 
-print "Install ZSH"
-sudo dnf install -y zsh
-chsh -s $(which zsh)
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-source ~/.zshrc
-
-print "Copy bash config files"
-mkdir -p ~/.bashrc.d
-cp -r config/bash/* ~/.bashrc.d/
-cp config/zsh/zshrc ~/.zshrc
-
 print "Install NVM"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-source ~/.zshrc
-
-print "Install Node and global packages"
-nvm install 20
-npm install --global nx @angular/cli firebase-tools aws-cdk ts-node prettier
-nvm install 22
-nvm use 22
-npm install --global nx @angular/cli firebase-tools aws-cdk ts-node prettier
-
-print "Install Golang"
-curl -LO https://dl.google.com/go/go1.24.5.linux-amd64.tar.gz
-mkdir -p ~/.local/bin
-tar -C ~/.local/bin -xzf go1.24.5.linux-amd64.tar.gz
-rm -rf go1.24.5.linux-amd64.tar.gz
+source ~/.bashrc
 
 print "Install GitFlow"
 export PREFIX=~/.local
@@ -182,8 +134,42 @@ sudo dnf install awsvpnclient -y
 sudo systemctl enable awsvpnclient
 sudo systemctl start awsvpnclient
 
+print "Install Google Chrome"
+sudo dnf install fedora-workstation-repositories
+sudo dnf config-manager setopt google-chrome.enabled=1
+sudo dnf install -y google-chrome-stable
+
+print "Install Shell Utils"
+sudo dnf install -y fzf zoxide
+curl https://mise.run | sh
+curl -sS https://starship.rs/install.sh | sh
+curl -L -o eza.zip https://github.com/eza-community/eza/releases/download/v0.23.4/eza_x86_64-unknown-linux-gnu.zip
+unzip eza.zip -d ~/.local/bin
+rm eza.zip
+
+print "Link bash config files"
+mkdir -p ~/.bashrc.d
+rm -f ~/.bashrc.d/*
+ln -s $PROJECT_DIR/config/bash/00_shell ~/.bashrc.d/00_shell
+ln -s $PROJECT_DIR/config/bash/01_aliases ~/.bashrc.d/01_aliases
+ln -s $PROJECT_DIR/config/bash/02_functions ~/.bashrc.d/02_functions
+ln -s $PROJECT_DIR/config/bash/03_prompt ~/.bashrc.d/03_prompt
+ln -s $PROJECT_DIR/config/bash/04_init ~/.bashrc.d/04_init
+ln -s $PROJECT_DIR/config/bash/05_exports ~/.bashrc.d/05_exports
+ln -s $PROJECT_DIR/config/bash/06_envs ~/.bashrc.d/06_envs
+ln -s $PROJECT_DIR/config/bash/inputrc ~/.inputrc
+ln -s $PROJECT_DIR/config/git/gitconfig ~/.gitconfig
+ln -s $PROJECT_DIR/config/git/gitconfig-ubits ~/.gitconfig-ubits
+
+print "Install Node"
+mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
+mise use --global node@lts
+
+print "Install global NPM packages"
+npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk nx @angular/cli
+
+print "Install Golang"
+mise use --global go@latest
+
 print "Install AWS CLI"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-./aws/install -i ~/.local/aws-cli -b ~/.local/bin
-rm -rf ./aws awscliv2.zip
+mise install aws-cli@latest
