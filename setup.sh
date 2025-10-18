@@ -34,6 +34,15 @@ cd $PROJECT_DIR
 print "Install Vim"
 sudo dnf install -y vim
 
+print "Install Dev Tools"
+sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf install -y dnf-plugins-core gcc gcc-c++ make cmake git unzip tar wget curl docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+sudo groupadd docker 2>/dev/null || true
+sudo usermod -aG docker $USER
+newgrp docker
+
 print "Enable vim colors and set as default editor"
 echo "syntax on" >> ~/.vimrc
 echo "set background=dark" >> ~/.vimrc
