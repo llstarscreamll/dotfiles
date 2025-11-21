@@ -109,34 +109,11 @@ if [ -z "$(ls -A $FONTS_DIR 2>/dev/null)" ]; then
     fc-cache -f -v
 fi
 
-if [ ! -f ~/.local/bin/cursor ]; then
+if ! command -v cursor &> /dev/null; then
     print "Install Cursor IDE"
-    
-    curl -L -o Cursor.AppImage https://downloads.cursor.com/production/54c27320fab08c9f5dd5873f07fca101f7a3e076/linux/x64/Cursor-1.3.9-x86_64.AppImage
-    chmod +x Cursor.AppImage
-    mkdir -p ~/.local/bin
-    mv Cursor.AppImage ~/.local/bin/cursor
-    
-    # Download an icon for Cursor
-    mkdir -p ~/.local/share/icons
-    if [ ! -f ~/.local/share/icons/cursor.png ]; then
-        curl -L -o ~/.local/share/icons/cursor.png https://paulstamatiou.com/_next/image?url=%2Fgear%2Fcursor-app-icon.png\&w=3840\&q=75
-    fi
-    
-    # Create desktop entry
-    mkdir -p ~/.local/share/applications
-    cat > ~/.local/share/applications/cursor.desktop << EOL
-    [Desktop Entry]
-    Name=Cursor IDE
-    Comment=AI-powered IDE for developers
-    Exec="$HOME/.local/bin/cursor"
-    Icon="$HOME/.local/share/icons/cursor.png"
-    Terminal=false
-    Type=Application
-    Categories=Development;IDE;
-    Keywords=cursor;code;programming;editor;
-    StartupWMClass=Cursor
-EOL
+    curl -L -o cursor.rpm https://api2.cursor.sh/updates/download/golden/linux-x64-rpm/cursor/2.0
+    sudo rpm -i cursor.rpm
+    rm cursor.rpm
 else
     print "Cursor IDE already installed"
 fi
