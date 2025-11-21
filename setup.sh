@@ -233,34 +233,13 @@ ln -sf $PROJECT_DIR/config/bash/inputrc ~/.inputrc
 ln -sf $PROJECT_DIR/config/git/gitconfig ~/.gitconfig
 ln -sf $PROJECT_DIR/config/git/gitconfig-ubits ~/.gitconfig-ubits
 
-if ! mise list node 2>/dev/null | grep -q "node"; then
-    print "Install Node"
-    mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
-    mise use --global node@lts
-else
-    print "Node already installed via mise"
-fi
+source ~/.bashrc
 
+print "Install Mise tools"
+mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
+mise install aws-cli@latest
+mise use --global node@lts
+mise use --global go@latest
 
 print "Install global NPM packages"
-for pkg in ts-node typescript eslint prettier firebase-tools aws-cdk nx @angular/cli; do
-    if ! npm list -g "$pkg" &>/dev/null; then
-        npm install -g "$pkg"
-    else
-        print "$pkg already installed"
-    fi
-done
-
-if ! mise list go 2>/dev/null | grep -q "go"; then
-    print "Install Golang"
-    mise use --global go@latest
-else
-    print "Golang already installed via mise"
-fi
-
-if ! mise list aws-cli 2>/dev/null | grep -q "aws-cli"; then
-    print "Install AWS CLI"
-    mise install aws-cli@latest
-else
-    print "AWS CLI already installed via mise"
-fi
+npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
