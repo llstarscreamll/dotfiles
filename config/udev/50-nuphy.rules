@@ -1,0 +1,3 @@
+# NuPhy keyboards
+SUBSYSTEM=="usb", ATTR{idVendor}=="19f5", TAG+="uaccess"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="19f5", TAG+="uaccess"
