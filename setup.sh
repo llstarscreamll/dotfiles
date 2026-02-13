@@ -33,7 +33,10 @@ main() {
     install_jetbrains_toolbox
     install_gitflow
     install_aws_vpn
+    install_aws_vpn
     install_chrome
+    install_obs
+    configure_obs
     
     install_shell_utils
     install_mise  # Explicitly install mise (separated from shell utils)
