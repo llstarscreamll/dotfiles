@@ -23,11 +23,29 @@ install_sublime() {
 install_cursor() {
     if ! command -v cursor &> /dev/null; then
         print "Install Cursor IDE"
-        curl -L -o cursor.rpm https://api2.cursor.sh/updates/download/golden/linux-x64-rpm/cursor/2.0
-        sudo rpm -i cursor.rpm
+        curl -L -o cursor.rpm https://api2.cursor.sh/updates/download/golden/linux-x64-rpm/cursor/2.5
+        sudo dnf install -y cursor.rpm
+        sudo dnf update -y
         rm cursor.rpm
     else
         print "Cursor IDE already installed"
+    fi
+}
+
+install_antigravity() {
+    if ! command -v antigravity &> /dev/null; then
+        print "Install Antigravity IDE"
+        sudo tee /etc/yum.repos.d/antigravity.repo << 'EOL'
+[antigravity-rpm]
+name=Antigravity RPM Repository
+baseurl=https://us-central1-yum.pkg.dev/projects/antigravity-auto-updater-dev/antigravity-rpm
+enabled=1
+gpgcheck=0
+EOL
+        sudo dnf makecache
+        sudo dnf install -y antigravity
+    else
+        print "Antigravity IDE already installed"
     fi
 }
 

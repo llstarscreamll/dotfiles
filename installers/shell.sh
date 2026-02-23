@@ -48,6 +48,35 @@ install_shell_utils() {
     fi
 }
 
+setup_ssh_key() {
+    # Post-quantum: OpenSSH 10+ uses PQ key exchange (mlkem768) by default.
+    # For authentication keys, PQ signing (SLH-DSA/ML-DSA) is not in upstream yet;
+    # we use Ed25519 (best available). Replace -t ed25519 with a PQ type when supported.
+    local key_path=~/.ssh/id_ed25519_pq
+    local key_pub="${key_path}.pub"
+
+    print "Setup SSH key and add to agent"
+    mkdir -p ~/.ssh
+    chmod 700 ~/.ssh
+
+    if [[ -f "$key_path" ]]; then
+        print "SSH key already exists: $key_path"
+    else
+        ssh-keygen -t ed25519 -f "$key_path" -N "" -C "pq-ssh-key"
+        chmod 600 "$key_path"
+        chmod 644 "$key_pub"
+        print "Created SSH key: $key_path"
+    fi
+
+    # Ensure ssh-agent is running and add the key
+    if [[ -z "${SSH_AUTH_SOCK:-}" ]]; then
+        eval "$(ssh-agent -s)" >/dev/null 2>&1
+    fi
+
+    ssh-add "$key_path" 2>/dev/null || true
+    print "SSH key is loaded in agent."
+}
+
 link_config_files() {
     print "Link bash config files"
     mkdir -p ~/.bashrc.d
@@ -65,3 +94,4 @@ link_config_files() {
 
     source ~/.bashrc
 }
+

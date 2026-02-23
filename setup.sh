@@ -31,6 +31,7 @@ main() {
     install_fonts
     install_cursor
     install_jetbrains_toolbox
+    install_antigravity
     install_gitflow
     install_aws_vpn
     install_aws_vpn
