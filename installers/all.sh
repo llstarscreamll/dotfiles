@@ -155,7 +155,10 @@ install_packages() {
     sudo systemctl enable awsvpnclient
     sudo systemctl start awsvpnclient
 
-    curl https://mise.run | sh
+    if [ ! -f "$HOME/.local/bin/mise" ]; then
+        curl https://mise.run | sh
+    fi
+
     mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
     mise use --global aws-cli@latest node@lts go@latest zoxide@latest fzf@latest rust@latest cargo:starship eza@latest
     npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
