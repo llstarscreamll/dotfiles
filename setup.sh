@@ -4,11 +4,8 @@ set -e
 
 source ./utils.sh
 
-# Source installer modules
 source ./installers/copy_config.sh
 source ./installers/all.sh
-
-# This script is the entry point for setting up a new machine based on Fedora
 
 PROJECT_DIR=$(pwd)
 
