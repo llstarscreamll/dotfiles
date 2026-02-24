@@ -6,14 +6,14 @@
     [[ "$output" == "function" ]]
 }
 
-@test "setup.sh: install_system_updates calls expected commands" {
+@test "setup.sh: update_system calls expected commands" {
     run bash -c "
         source ./setup.sh
         print() { echo \"MOCK_PRINT: \$*\"; }
         flatpak() { echo \"MOCK_FLATPAK: \$*\"; }
         dnf() { echo \"MOCK_DNF: \$*\"; }
         sudo() { echo \"MOCK_SUDO: \$*\"; }
-        install_system_updates
+        update_system
     "
     
     [ "$status" -eq 0 ]
