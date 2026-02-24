@@ -169,5 +169,11 @@ install_packages() {
         com.obsproject.Studio \
         com.google.Chrome
 
+
+    flatpak override --user --filesystem=~/.local/share/applications com.google.Chrome
+    flatpak override --user --filesystem=~/.local/share/icons com.google.Chrome
+
+    echo "eval \"\$(/home/johan/.local
+
     update_system
 }
