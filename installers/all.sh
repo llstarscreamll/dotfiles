@@ -12,8 +12,7 @@ update_system() {
     print "Update system packages"
 
     flatpak update -y
-    dnf check-update
-    sudo dnf update -y
+    sudo dnf upgrade --refresh -y
 }
 
 install_cursor() {
@@ -150,6 +149,7 @@ install_packages() {
     sudo dnf install -y \
         dnf-plugins-core bats gcc gcc-c++ make cmake git unzip tar wget curl \
         awsvpnclient \
+        podman-compose \
         vim code antigravity
 
     sudo systemctl enable awsvpnclient
@@ -167,13 +167,11 @@ install_packages() {
         org.telegram.desktop \
         com.slack.Slack \
         com.obsproject.Studio \
-        com.google.Chrome
+        com.google.Chrome \
+        com.mattjakeman.ExtensionManager
 
-
-    flatpak override --user --filesystem=~/.local/share/applications com.google.Chrome
-    flatpak override --user --filesystem=~/.local/share/icons com.google.Chrome
-
-    echo "eval \"\$(/home/johan/.local
+    flatpak override --user --filesystem=$HOME/.local/share/applications com.google.Chrome
+    flatpak override --user --filesystem=$HOME/.local/share/icons com.google.Chrome
 
     update_system
 }
