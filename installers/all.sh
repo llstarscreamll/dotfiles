@@ -149,6 +149,8 @@ setup_mise() {
     npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
 }
 
+
+
 install_dnf_packages() {
     print "Install dnf packages"
 
@@ -180,6 +182,21 @@ install_flatpacks(){
     flatpak override --user --filesystem=$HOME/.local/share/icons com.google.Chrome
 }
 
+install_docker() {
+    if command -v docker &> /dev/null; then
+        return
+    fi
+
+    print "Install Docker"
+
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    rm -f get-docker.sh
+
+    sudo systemctl enable --now docker
+    sudo usermod -aG docker "$USER"
+}
+
 install_packages() {
     update_system
     update_flatpaks
@@ -197,6 +214,7 @@ install_packages() {
     
     install_dnf_packages
     install_flatpacks
+    install_docker
 
     update_system
     update_flatpaks
