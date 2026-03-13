@@ -11,8 +11,13 @@ setup_packages_sources() {
 update_system() {
     print "Update system packages"
 
-    flatpak update -y
     sudo dnf upgrade --refresh -y
+}
+
+update_flatpaks() {
+    print "Update flatpaks"
+
+    flatpak update -y
 }
 
 install_cursor() {
@@ -130,8 +135,37 @@ setup_ssh_key() {
     print "SSH key loaded to agent."
 }
 
+setup_mise() {
+    print "Setup mise"
+
+    if [ ! -f "$HOME/.local/bin/mise" ]; then
+        curl https://mise.run | sh
+    fi
+
+    eval "$(mise activate bash)"
+
+    mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
+    mise use --global aws-cli@latest node@lts go@latest zoxide@latest fzf@latest rust@latest cargo:starship eza@latest
+    npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
+}
+
+install_flatpacks(){
+    print "Setup flatpacks"
+
+    flatpak install -y flathub \
+        org.telegram.desktop \
+        com.slack.Slack \
+        com.obsproject.Studio \
+        com.google.Chrome \
+        com.mattjakeman.ExtensionManager
+
+    flatpak override --user --filesystem=$HOME/.local/share/applications com.google.Chrome
+    flatpak override --user --filesystem=$HOME/.local/share/icons com.google.Chrome
+}
+
 install_packages() {
     update_system
+    update_flatpaks
 
     setup_ssh_key
     install_fonts
@@ -148,30 +182,16 @@ install_packages() {
 
     sudo dnf install -y \
         dnf-plugins-core bats gcc gcc-c++ make cmake git unzip tar wget curl \
-        awsvpnclient \
+        sqlite-devel awsvpnclient \
         podman-compose \
         vim code antigravity
 
     sudo systemctl enable awsvpnclient
     sudo systemctl start awsvpnclient
 
-    if [ ! -f "$HOME/.local/bin/mise" ]; then
-        curl https://mise.run | sh
-    fi
-
-    mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
-    mise use --global aws-cli@latest node@lts go@latest zoxide@latest fzf@latest rust@latest cargo:starship eza@latest
-    npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
-
-    flatpak install -y flathub \
-        org.telegram.desktop \
-        com.slack.Slack \
-        com.obsproject.Studio \
-        com.google.Chrome \
-        com.mattjakeman.ExtensionManager
-
-    flatpak override --user --filesystem=$HOME/.local/share/applications com.google.Chrome
-    flatpak override --user --filesystem=$HOME/.local/share/icons com.google.Chrome
+    setup_mise
+    install_flatpacks
 
     update_system
+    update_flatpaks
 }
