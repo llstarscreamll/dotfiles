@@ -149,6 +149,23 @@ setup_mise() {
     npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
 }
 
+install_dnf_packages() {
+    print "Install dnf packages"
+
+    sudo dnf makecache
+
+    sudo dnf group install multimedia -y
+
+    sudo dnf install -y \
+        dnf-plugins-core bats gcc gcc-c++ make cmake git unzip tar wget curl openssl \
+        sqlite-devel awsvpnclient \
+        podman-compose \
+        vim code antigravity
+
+    sudo systemctl enable awsvpnclient
+    sudo systemctl start awsvpnclient
+}
+
 install_flatpacks(){
     print "Setup flatpacks"
 
@@ -176,20 +193,9 @@ install_packages() {
     install_sublime
     install_jetbrains_toolbox
 
-    sudo dnf makecache
-
-    sudo dnf group install multimedia -y
-
-    sudo dnf install -y \
-        dnf-plugins-core bats gcc gcc-c++ make cmake git unzip tar wget curl \
-        sqlite-devel awsvpnclient \
-        podman-compose \
-        vim code antigravity
-
-    sudo systemctl enable awsvpnclient
-    sudo systemctl start awsvpnclient
-
     setup_mise
+    
+    install_dnf_packages
     install_flatpacks
 
     update_system
