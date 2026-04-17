@@ -135,7 +135,7 @@ setup_ssh_key() {
     print "SSH key loaded to agent."
 }
 
-setup_mise() {
+install_mise() {
     print "Setup mise"
 
     if [ ! -f "$HOME/.local/bin/mise" ]; then
@@ -143,9 +143,21 @@ setup_mise() {
     fi
 
     eval "$(mise activate bash)"
+}
 
+install_nodejs() {
+    print "Setup mise Node.js"
     mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
-    mise use --global aws-cli@latest node@lts go@latest zoxide@latest fzf@latest rust@latest cargo:starship eza@latest
+    mise use --global node@lts
+}
+
+install_cli_tools() {
+    print "Setup mise CLI tools"
+    mise use --global aws-cli@latest go@latest zoxide@latest fzf@latest rust@latest starship@latest eza@latest
+}
+
+install_npm_global_packages() {
+    print "Install NPM global packages"
     npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
 }
 
@@ -176,7 +188,9 @@ install_flatpacks(){
         com.slack.Slack \
         com.obsproject.Studio \
         com.google.Chrome \
-        com.mattjakeman.ExtensionManager
+        com.mattjakeman.ExtensionManager \
+        org.mozilla.firefox \
+        com.vivaldi.Vivaldi
 
     flatpak override --user --filesystem=$HOME/.local/share/applications com.google.Chrome
     flatpak override --user --filesystem=$HOME/.local/share/icons com.google.Chrome
@@ -210,7 +224,10 @@ install_packages() {
     install_sublime
     install_jetbrains_toolbox
 
-    setup_mise
+    install_mise
+    install_nodejs
+    install_cli_tools
+    install_npm_global_packages
     
     install_dnf_packages
     install_flatpacks

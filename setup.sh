@@ -10,7 +10,24 @@ source ./installers/all.sh
 PROJECT_DIR=$(pwd)
 
 main() {
-    install_packages
+    if grep -q "VARIANT_ID=silverblue" /etc/os-release; then
+        print "Fedora Silverblue detected"
+        if rpm -q firefox > /dev/null; then
+            print "Removing base system Firefox (if not already queued)"
+            sudo rpm-ostree override remove firefox firefox-langpacks 2>/dev/null || true
+        fi
+        install_flatpacks
+        install_fonts
+        setup_ssh_key
+        install_gitflow
+        install_jetbrains_toolbox
+        install_mise
+        install_cli_tools
+    else
+        print "Fedora Workstation detected"
+        install_packages
+    fi
+    
     copy_config_files
     
     cd $PROJECT_DIR
