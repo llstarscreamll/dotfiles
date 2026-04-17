@@ -153,15 +153,13 @@ install_nodejs() {
 
 install_cli_tools() {
     print "Setup mise CLI tools"
-    mise use --global aws-cli@latest go@latest zoxide@latest fzf@latest rust@latest starship@latest eza@latest
+    mise use --global aws-cli@latest go@latest zoxide@latest fzf@latest starship@latest eza@latest pnpm@latest ollama@latest opencode@latest
 }
 
 install_npm_global_packages() {
     print "Install NPM global packages"
     npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
 }
-
-
 
 install_dnf_packages() {
     print "Install dnf packages"
@@ -173,7 +171,6 @@ install_dnf_packages() {
     sudo dnf install -y \
         dnf-plugins-core bats gcc gcc-c++ make cmake git unzip tar wget curl openssl \
         sqlite-devel awsvpnclient \
-        podman-compose \
         vim code antigravity
 
     sudo systemctl enable awsvpnclient

@@ -26,6 +26,12 @@ alias ....='cd ../../..'
 
 # Tools
 alias d='docker'
+alias docker-compose='docker compose'
+
+# Silverblue uses podman instead of docker
+if grep -q "VARIANT_ID=silverblue" /etc/os-release 2>/dev/null; then
+    alias docker='podman'
+fi
 alias r='rails'
 n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
 
