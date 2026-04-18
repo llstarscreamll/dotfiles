@@ -36,7 +36,7 @@ install_sublime() {
         return
     fi
 
-    curl -fsSL https://download.sublimetext.com/sublimehq-rpm-pub.gpg | sudo rpm --import -
+    sudo rpm --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
     curl -O https://download.sublimetext.com/sublime-text-4200-1.x86_64.rpm
     sudo dnf install -y sublime-text-4200-1.x86_64.rpm
     rm -f sublime-text-4200-1.x86_64.rpm
@@ -133,6 +133,19 @@ setup_ssh_key() {
     ssh-add "$key_path" 2>/dev/null || true
     
     print "SSH key loaded to agent."
+
+    if command -v wl-copy &> /dev/null; then
+        wl-copy < "$key_pub"
+        print "SSH public key copied to clipboard (Wayland)."
+    elif command -v xclip &> /dev/null; then
+        xclip -selection clipboard < "$key_pub"
+        print "SSH public key copied to clipboard (X11)."
+    else
+        print "Please install wl-clipboard or xclip to auto-copy your SSH key."
+    fi
+
+    print "Opening GitHub SSH settings..."
+    xdg-open "https://github.com/settings/ssh/new" &
 }
 
 install_mise() {
@@ -147,7 +160,7 @@ install_mise() {
 
 install_nodejs() {
     print "Setup mise Node.js"
-    mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
+    MISE_JOBS=1 mise install node@latest node@24 node@22 node@20 node@18 node@16 node@14
     mise use --global node@lts
 }
 
@@ -158,7 +171,7 @@ install_cli_tools() {
 
 install_npm_global_packages() {
     print "Install NPM global packages"
-    npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli
+    mise exec -- npm install -g ts-node typescript eslint prettier firebase-tools aws-cdk @angular/cli pnpm
 }
 
 install_dnf_packages() {
@@ -168,7 +181,7 @@ install_dnf_packages() {
 
     sudo dnf group install multimedia -y
 
-    sudo dnf install -y \
+    sudo dnf install -y --setopt=optional_metadata_types=filelists \
         dnf-plugins-core bats gcc gcc-c++ make cmake git unzip tar wget curl openssl \
         sqlite-devel awsvpnclient \
         vim code antigravity
@@ -191,6 +204,9 @@ install_flatpacks(){
 
     flatpak override --user --filesystem=$HOME/.local/share/applications com.google.Chrome
     flatpak override --user --filesystem=$HOME/.local/share/icons com.google.Chrome
+
+    print "Launching Google Chrome"
+    flatpak run com.google.Chrome &
 }
 
 install_docker() {
@@ -208,11 +224,16 @@ install_docker() {
     sudo usermod -aG docker "$USER"
 }
 
+configure_gnome() {
+    print "Configure Gnome Desktop"
+
+    xdg-settings set default-web-browser com.google.Chrome.desktop
+}
+
 install_packages() {
     update_system
     update_flatpaks
 
-    setup_ssh_key
     install_fonts
 
     install_gitflow

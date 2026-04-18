@@ -18,7 +18,6 @@ main() {
         fi
         install_flatpacks
         install_fonts
-        setup_ssh_key
         install_gitflow
         install_jetbrains_toolbox
         install_mise
@@ -28,7 +27,10 @@ main() {
         install_packages
     fi
     
+    configure_gnome
     copy_config_files
+    
+    setup_ssh_key
     
     cd $PROJECT_DIR
 }
