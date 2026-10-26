@@ -14,6 +14,15 @@ HISTSIZE=50000
 SAVEHIST=50000
 setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
 
+# Keep trivial commands out of the saved history
+# (still recallable with Up until the next command runs)
+zshaddhistory() {
+  local line=${1%%$'\n'}
+  [[ $line != (ls|l|ll|la|lt)(| *) &&
+     $line != (c|clear|q|exit|pwd|history|fg|bg|jobs) &&
+     $line != cd(| ..| -| \~) ]]
+}
+
 # Up/Down search history for commands starting with what's typed
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
