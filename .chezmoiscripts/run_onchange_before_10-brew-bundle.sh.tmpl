@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Homebrew shellenv (needed in non-interactive chezmoi runs)
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Brewfile is embedded so this script re-runs whenever packages change.
+brew bundle --file=/dev/stdin <<'EOF'
+{{ include "Brewfile" -}}
+EOF
+{{- end -}}

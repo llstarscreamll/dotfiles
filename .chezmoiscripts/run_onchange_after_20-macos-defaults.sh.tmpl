@@ -1,0 +1,32 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+echo "Configuring macOS defaults..."
+
+# Faster key repeat (disable press-and-hold for accents)
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+# Disable Ctrl+Arrow Mission Control / Spaces shortcuts
+# 79/81: move left/right a space; 32/33: Mission Control / App windows
+# 80/82: shift variants
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 79 "{enabled = 0; value = {parameters = (65535, 123, 8650752); type = standard;};}"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 80 "{enabled = 0; value = {parameters = (65535, 123, 8781824); type = standard;};}"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 "{enabled = 0; value = {parameters = (65535, 124, 8650752); type = standard;};}"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 82 "{enabled = 0; value = {parameters = (65535, 124, 8781824); type = standard;};}"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 32 "{enabled = 0; value = {parameters = (65535, 126, 8650752); type = standard;};}"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 33 "{enabled = 0; value = {parameters = (65535, 125, 8650752); type = standard;};}"
+
+defaults read com.apple.symbolichotkeys.plist >/dev/null
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u || true
+
+# Empty Dock
+defaults write com.apple.dock persistent-apps -array
+defaults write com.apple.dock persistent-others -array
+defaults write com.apple.dock show-recents -bool false
+killall Dock || true
+
+echo "macOS defaults applied."
+{{- end -}}
