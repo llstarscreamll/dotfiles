@@ -1,3 +1,3 @@
 # Fallback theme. Interactive shells override it with --theme to follow the
-# macOS appearance (see the hunk() function in ~/.zshrc).
+# macOS appearance (see ~/.config/zsh/functions/hunk).
 theme = "catppuccin-mocha"

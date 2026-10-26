@@ -1,0 +1,4 @@
+# hunk: Catppuccin Latte/Mocha following the macOS appearance
+local theme=catppuccin-latte
+[[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == Dark ]] && theme=catppuccin-mocha
+command hunk --theme "$theme" "$@"

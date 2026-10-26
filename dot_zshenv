@@ -1,0 +1,5 @@
+# Loaded by every zsh, including scripts and shells started by other apps.
+
+# Default editor (also used by git)
+export EDITOR=nvim
+export VISUAL=nvim

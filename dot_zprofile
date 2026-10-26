@@ -1,0 +1,15 @@
+# Loaded by login shells (every new terminal on macOS): PATH setup.
+# Lives here so it runs after macOS's /etc/zprofile reorders PATH.
+
+# Homebrew (Apple Silicon / Intel)
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# mise shims, so tools resolve in non-interactive use;
+# .zshrc switches to full activation for interactive shells.
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh --shims)"
+fi
