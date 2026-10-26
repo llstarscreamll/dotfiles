@@ -1,3 +1,4 @@
 [tools]
 claude = "latest"
 "github:anomalyco/opencode" = "latest"
+"github:gittower/git-flow-next" = "latest"
