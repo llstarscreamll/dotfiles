@@ -1,0 +1,7 @@
+# Catppuccin, switching with the terminal's light/dark report
+# (Ghostty follows the macOS appearance).
+[theme]
+name = "catppuccin"
+auto_switch = true
+light_name = "catppuccin-latte"
+dark_name = "catppuccin"

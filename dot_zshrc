@@ -9,3 +9,10 @@ fi
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi
+
+# hunk: Catppuccin Latte/Mocha following the macOS appearance
+hunk() {
+  local theme=catppuccin-latte
+  [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == Dark ]] && theme=catppuccin-mocha
+  command hunk --theme "$theme" "$@"
+}
