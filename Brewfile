@@ -3,3 +3,5 @@
 brew "mise"
 cask "ghostty"
 cask "font-jetbrains-mono-nerd-font"
+cask "visual-studio-code"
+cask "ungoogled-chromium"
