@@ -16,3 +16,8 @@ hunk() {
   [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == Dark ]] && theme=catppuccin-mocha
   command hunk --theme "$theme" "$@"
 }
+
+# Starship prompt (keep last)
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi

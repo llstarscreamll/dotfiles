@@ -1,0 +1,17 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+# Uses the terminal's ANSI colors, so it follows Ghostty's
+# Catppuccin Latte/Mocha switch with the macOS appearance.
+add_newline = true
+command_timeout = 1000
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+
+[cmd_duration]
+min_time = 2000
