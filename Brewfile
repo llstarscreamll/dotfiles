@@ -3,6 +3,8 @@
 brew "git"
 brew "mise"
 brew "python@3.14"
+brew "eza"
+brew "ffmpeg"
 cask "ghostty"
 cask "font-jetbrains-mono-nerd-font"
 cask "visual-studio-code"

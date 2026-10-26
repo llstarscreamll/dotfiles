@@ -16,6 +16,11 @@ autoload -Uz ~/.config/zsh/functions/*(N:t)
 # Aliases
 [[ -r ~/.config/zsh/aliases.zsh ]] && source ~/.config/zsh/aliases.zsh
 
+# zoxide: cd also jumps by partial name; cdi picks interactively
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh --cmd cd)"
+fi
+
 # Machine-specific settings, not tracked in dotfiles
 [[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
 
