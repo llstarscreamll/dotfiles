@@ -10,6 +10,10 @@ if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi
 
+# Default editor (also used by git)
+export EDITOR=nvim
+export VISUAL=nvim
+
 # hunk: Catppuccin Latte/Mocha following the macOS appearance
 hunk() {
   local theme=catppuccin-latte
