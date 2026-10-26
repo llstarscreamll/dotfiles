@@ -2,3 +2,7 @@
 claude = "latest"
 "github:anomalyco/opencode" = "latest"
 "github:gittower/git-flow-next" = "latest"
+node = ["24", "22", "20", "18"]
+pnpm = "latest"
+awscli = "latest"
+gcloud = "latest"
