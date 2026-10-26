@@ -4,6 +4,25 @@
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
 
+# Emacs-style line editing (zsh would pick vi mode because EDITOR=nvim)
+bindkey -e
+
+# History: large, shared live across terminals, no duplicates;
+# commands starting with a space are not saved
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
+
+# Up/Down search history for commands starting with what's typed
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
+
 # mise (runtimes & tools)
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
@@ -19,6 +38,11 @@ autoload -Uz ~/.config/zsh/functions/*(N:t)
 # zoxide: cd also jumps by partial name; cdi picks interactively
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh --cmd cd)"
+fi
+
+# Fish-like suggestions from history (accept with Right arrow)
+if [[ -r "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
 # Machine-specific settings, not tracked in dotfiles
