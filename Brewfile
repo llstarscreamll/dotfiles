@@ -1,5 +1,6 @@
 # Minimal day-1 packages. Add lines, then: chezmoi apply
 
+brew "git"
 brew "mise"
 brew "python@3.14"
 cask "ghostty"
