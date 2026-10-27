@@ -1,0 +1,36 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Homebrew shellenv (needed in non-interactive chezmoi runs)
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+echo "Configuring Google Chrome..."
+
+# Chrome stable as default browser (macOS asks for confirmation)
+if ! defaultbrowser | grep -qx '\* chrome'; then
+  defaultbrowser chrome
+fi
+
+# Stable and Canary: leave passwords and passkeys to the iCloud Passwords extension
+for channel in "com.google.Chrome:Chrome" "com.google.Chrome.canary:Chrome Canary"; do
+  domain="${channel%%:*}"
+  data_dir="$HOME/Library/Application Support/Google/${channel#*:}"
+
+  defaults write "$domain" PasswordManagerEnabled -bool false
+  defaults write "$domain" PasswordManagerPasskeysEnabled -bool false
+  defaults write "$domain" PasswordLeakDetectionEnabled -bool false
+  defaults write "$domain" PasswordSharingEnabled -bool false
+
+  # Offer iCloud Passwords; Chrome asks to enable it on next launch
+  mkdir -p "$data_dir/External Extensions"
+  echo '{"external_update_url": "https://clients2.google.com/service/update2/crx"}' \
+    > "$data_dir/External Extensions/pejdijmoenmkgeppbflobdenhhabjlaj.json"
+done
+
+echo "Google Chrome configured."
+{{- end -}}
