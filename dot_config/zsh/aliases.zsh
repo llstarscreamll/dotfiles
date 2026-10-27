@@ -1,6 +1,7 @@
 # Shell shortcuts
 alias c='clear'
 alias q='exit'
+alias ..='cd ..'
 
 # eza: ls with icons, git status and directories first
 if command -v eza >/dev/null 2>&1; then
