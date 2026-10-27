@@ -10,6 +10,10 @@ font-size = 14
 confirm-close-surface = false
 resize-overlay = never
 
-# Cursor
-cursor-style = block
-cursor-style-blink = false
+# Cursor — blinking underline; orange stands out on Mocha and Latte
+cursor-style = underline
+cursor-style-blink = true
+cursor-color = #fe640b
+adjust-cursor-thickness = 2
+# Keep shell integration from forcing a bar cursor at the prompt
+shell-integration-features = no-cursor
