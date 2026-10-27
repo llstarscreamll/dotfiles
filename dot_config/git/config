@@ -1,0 +1,6 @@
+[user]
+    name = Johan Alvarez
+    email = llstarscreamll@hotmail.com
+
+[includeIf "gitdir/i:~/code/Ubits/"]
+    path = ~/.config/git/config-ubits
