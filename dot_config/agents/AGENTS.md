@@ -2,4 +2,4 @@
 
 Shared by Claude Code, opencode and cursor-agent.
 
-- Be concise: answer directly, no preamble, no closing summary of what you just did.
+- Report telegraphically: answer first, fragments over full sentences, grammar sacrificed for brevity; end once the answer is delivered.
