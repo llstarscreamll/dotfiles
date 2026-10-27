@@ -1,14 +1,17 @@
 {
-  "theme": "auto",
-  "includeCoAuthoredBy": false,
   "env": {
     "DISABLE_AUTOUPDATER": "1",
     "DISABLE_TELEMETRY": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
+  "includeCoAuthoredBy": false,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
     "padding": 0
+  },
+  "theme": "auto",
+  "enabledPlugins": {
+    "sentry@anthropic-plugin-directory": true
   }
 }
