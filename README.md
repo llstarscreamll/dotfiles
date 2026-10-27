@@ -45,3 +45,26 @@ chezmoi apply
 chezmoi cd          # open source dir
 chezmoi source-path
 ```
+
+## SSH key (GitHub / Bitbucket)
+
+Last step, after bootstrap. Generates a key, stores the passphrase in the macOS Keychain, and copies the public key to the clipboard:
+
+```bash
+ssh-keygen -t ed25519 -C "$(whoami)@$(hostname -s)" -f ~/.ssh/id_ed25519
+cat >> ~/.ssh/config <<'CFG'
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+CFG
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+pbcopy < ~/.ssh/id_ed25519.pub
+```
+
+Paste it in [GitHub → SSH keys](https://github.com/settings/ssh/new) or [Bitbucket → SSH keys](https://bitbucket.org/account/settings/ssh-keys/), then verify:
+
+```bash
+ssh -T git@github.com
+ssh -T git@bitbucket.org
+```
