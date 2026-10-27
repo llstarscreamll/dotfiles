@@ -31,6 +31,8 @@ Also applies: faster key repeat, disables Ctrl+Arrow Mission Control shortcuts, 
 
 Agent skills (Claude Code, Cursor, opencode): add a `<repo> <skill>` line to [`Skillfile`](Skillfile) and run `chezmoi apply`.
 
+Own skills live in [`dot_agents/skills/`](dot_agents/skills/) (`~/.agents/skills/`, read by Cursor and opencode). Claude Code needs a matching symlink in [`dot_claude/skills/`](dot_claude/skills/): a `symlink_<skill>` file containing `../../.agents/skills/<skill>`.
+
 Managed configs live as chezmoi source files (`dot_zshrc`, `dot_config/...`). Add new ones with:
 
 ```bash
