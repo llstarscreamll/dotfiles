@@ -1,0 +1,3 @@
+# Agent skills installed globally for Claude Code, Cursor and opencode.
+# Format: <source repo> <skill name>
+mattpocock/skills writing-for-agents

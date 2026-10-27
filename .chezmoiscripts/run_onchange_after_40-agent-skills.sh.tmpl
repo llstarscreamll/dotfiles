@@ -1,0 +1,20 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Homebrew shellenv (needed in non-interactive chezmoi runs)
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Skillfile is embedded so this script re-runs whenever skills change.
+while read -r source skill; do
+  [[ -z "$source" || "$source" == \#* ]] && continue
+  mise exec node@24 -- npx -y skills@latest add "$source" \
+    -g -a claude-code cursor opencode -s "$skill" -y </dev/null
+done <<'SKILLFILE'
+{{ include "Skillfile" -}}
+SKILLFILE
+{{- end -}}

@@ -29,6 +29,8 @@ Also applies: faster key repeat, disables Ctrl+Arrow Mission Control shortcuts, 
 1. Edit [`Brewfile`](Brewfile) (e.g. `cask "cursor"`, `brew "neovim"`).
 2. Run `chezmoi apply` (re-runs brew bundle; also updates `~/Brewfile`).
 
+Agent skills (Claude Code, Cursor, opencode): add a `<repo> <skill>` line to [`Skillfile`](Skillfile) and run `chezmoi apply`.
+
 Managed configs live as chezmoi source files (`dot_zshrc`, `dot_config/...`). Add new ones with:
 
 ```bash
