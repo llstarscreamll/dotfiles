@@ -26,10 +26,14 @@ for channel in "com.google.Chrome:Chrome" "com.google.Chrome.canary:Chrome Canar
   defaults write "$domain" PasswordLeakDetectionEnabled -bool false
   defaults write "$domain" PasswordSharingEnabled -bool false
 
-  # Offer iCloud Passwords; Chrome asks to enable it on next launch
-  mkdir -p "$data_dir/External Extensions"
-  echo '{"external_update_url": "https://clients2.google.com/service/update2/crx"}' \
-    > "$data_dir/External Extensions/pejdijmoenmkgeppbflobdenhhabjlaj.json"
+  # Offer iCloud Passwords; Chrome asks to enable it on next launch.
+  # macOS blocks writes to another app's data unless the terminal has Full Disk Access.
+  if mkdir -p "$data_dir/External Extensions" 2>/dev/null; then
+    echo '{"external_update_url": "https://clients2.google.com/service/update2/crx"}' \
+      > "$data_dir/External Extensions/pejdijmoenmkgeppbflobdenhhabjlaj.json"
+  else
+    echo "Skipped iCloud Passwords for ${channel#*:}: give the terminal Full Disk Access and re-run chezmoi apply." >&2
+  fi
 done
 
 echo "Google Chrome configured."
