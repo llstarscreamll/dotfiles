@@ -1,0 +1,22 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# Rectangle imports this file on launch, then renames it so it isn't re-read.
+# Re-runs whenever rectangle/RectangleConfig.json changes.
+# config hash: {{ include "rectangle/RectangleConfig.json" | sha256sum }}
+
+echo "Installing Rectangle config..."
+
+dir="$HOME/Library/Application Support/Rectangle"
+mkdir -p "$dir"
+rm -f "$dir"/RectangleConfig2*.json  # copies left by previous imports
+cat > "$dir/RectangleConfig.json" <<'JSON'
+{{ include "rectangle/RectangleConfig.json" }}
+JSON
+
+# Restart so it picks up the file; wait for the old instance to exit first
+killall Rectangle 2>/dev/null || true
+while pgrep -x Rectangle >/dev/null; do sleep 0.5; done
+open -a Rectangle || true
+{{- end -}}
