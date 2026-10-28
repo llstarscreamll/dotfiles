@@ -15,6 +15,10 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+# Natural scrolling (macOS applies it to trackpad and mouse alike;
+# LinearMouse reverses it back for mice, see ~/.config/linearmouse)
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+
 # Disable Ctrl+Arrow Mission Control / Spaces shortcuts
 # 79/81: move left/right a space; 32/33: Mission Control / App windows
 # 80/82: shift variants

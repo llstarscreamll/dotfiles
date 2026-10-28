@@ -24,6 +24,8 @@ Ghostty uses **Catppuccin Mocha** (dark) / **Latte** (light) and follows the sys
 
 Also applies: faster key repeat, disables Ctrl+Arrow Mission Control shortcuts, clears the Dock.
 
+Scrolling: natural on the trackpad, classic on mice. macOS has one switch for both, so [LinearMouse](https://linearmouse.org/) reverses mouse scrolling ([`dot_config/linearmouse/linearmouse.json`](dot_config/linearmouse/linearmouse.json)). Grant it Accessibility access and enable "Start at login" once.
+
 ## Add more tools later
 
 1. Edit [`Brewfile`](Brewfile) (e.g. `cask "cursor"`, `brew "neovim"`).
