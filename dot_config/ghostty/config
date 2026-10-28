@@ -17,3 +17,7 @@ cursor-color = #fe640b
 adjust-cursor-thickness = 2
 # Keep shell integration from forcing a bar cursor at the prompt
 shell-integration-features = no-cursor
+
+# Left Option sends Alt (nvim/shell bindings); right Option still types
+# layout characters like @, \ and | and accent dead keys
+macos-option-as-alt = left
