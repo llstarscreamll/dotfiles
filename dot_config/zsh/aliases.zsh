@@ -7,7 +7,7 @@ alias ..='cd ..'
 if command -v eza >/dev/null 2>&1; then
   alias ls='eza --icons=auto --group-directories-first'
   alias l='ls -l --git'
-  alias ll='ls -l --git'
-  alias la='ll -a'
+  alias ll='ls -la --git'
+  alias la='ls -la --git'
   alias lt='ls --tree --level=2'
 fi
