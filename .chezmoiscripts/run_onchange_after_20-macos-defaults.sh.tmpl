@@ -35,6 +35,10 @@ defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock autohide -bool true
 killall Dock || true
 
+# Finder search looks in the current folder instead of the whole Mac
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+killall Finder || true
+
 # Never sleep the system on AC power so long tasks keep running (display still sleeps)
 sudo pmset -c sleep 0
 
