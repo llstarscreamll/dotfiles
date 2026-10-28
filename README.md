@@ -31,6 +31,8 @@ Also applies: faster key repeat, disables Ctrl+Arrow Mission Control shortcuts, 
 
 Agent skills (Claude Code, Cursor, opencode): add a `<repo> <skill>` line to [`Skillfile`](Skillfile) and run `chezmoi apply`.
 
+AWS skills and the AWS MCP server come from `aws configure agent-toolkit --yes` (run once by `chezmoi apply`). Update them with `aws agent-toolkit update-skill --all`; find more with `aws agent-toolkit search-skills --search-query <query> --region us-east-1`.
+
 Own skills live in [`dot_agents/skills/`](dot_agents/skills/) (`~/.agents/skills/`, read by Cursor and opencode). Claude Code needs a matching symlink in [`dot_claude/skills/`](dot_claude/skills/): a `symlink_<skill>` file containing `../../.agents/skills/<skill>`.
 
 Managed configs live as chezmoi source files (`dot_zshrc`, `dot_config/...`). Add new ones with:
