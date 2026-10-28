@@ -9,6 +9,15 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
+# Keyboard layouts: Latin American stays the default; add ABC (English) for external keyboards.
+# ABC types accents with dead keys: Option+e then a vowel (á), Option+n then n (ñ).
+if ! defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null | grep -q '"KeyboardLayout Name" = ABC;'; then
+  defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add \
+    '<dict><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>252</integer><key>KeyboardLayout Name</key><string>ABC</string></dict>'
+fi
+# Tap Caps Lock to switch between ABC and Latin American (hold it for caps lock)
+defaults write NSGlobalDomain TISRomanSwitchState -int 1
+
 # Trackpad tap to click (built-in and Bluetooth)
 defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
