@@ -21,7 +21,7 @@ Already cloned locally? `./bootstrap.sh` from the repo root works the same.
 | JetBrainsMono Nerd Font | brew cask |
 | tmux | brew |
 
-Ghostty uses **Catppuccin Mocha** (dark) / **Latte** (light) and follows the system appearance. tmux ([`dot_config/tmux/tmux.conf`](dot_config/tmux/tmux.conf)) uses only the terminal's ANSI colours, so it follows whatever theme Ghostty shows.
+Ghostty uses **Catppuccin Mocha** (dark) / **Latte** (light) and follows the system appearance. tmux ([`dot_config/tmux/tmux.conf`](dot_config/tmux/tmux.conf)) uses only the terminal's ANSI colours, so it follows whatever theme Ghostty shows. New Ghostty tabs/windows open in tmux, reattaching a detached session first.
 
 Also applies: faster key repeat, disables Ctrl+Arrow Mission Control shortcuts, clears the Dock.
 

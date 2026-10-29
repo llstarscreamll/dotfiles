@@ -1,5 +1,16 @@
 # Loaded by interactive shells.
 
+# Ghostty opens into tmux: reattach a detached session if there is one,
+# otherwise start a new one (each tab/split gets its own session)
+if [[ -z $TMUX && $TERM_PROGRAM == ghostty ]] && command -v tmux >/dev/null 2>&1; then
+  detached=$(tmux ls -F '#{?session_attached,,#S}' 2>/dev/null | grep -m1 .)
+  if [[ -n $detached ]]; then
+    exec tmux attach -t "$detached"
+  else
+    exec tmux new-session
+  fi
+fi
+
 # Completions (zsh built-ins + Homebrew's site-functions)
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
