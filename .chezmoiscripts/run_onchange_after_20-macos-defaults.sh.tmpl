@@ -15,8 +15,10 @@ if ! defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null | gr
   defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add \
     '<dict><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>252</integer><key>KeyboardLayout Name</key><string>ABC</string></dict>'
 fi
-# Tap Caps Lock to switch between ABC and Latin American (hold it for caps lock)
-defaults write NSGlobalDomain TISRomanSwitchState -int 1
+# Ctrl+Opt+Space switches between ABC and Latin American (60: select the previous input source).
+# Caps Lock switching (TISRomanSwitchState) only applies with a non-Latin source and stops after a reboot.
+defaults delete NSGlobalDomain TISRomanSwitchState 2>/dev/null || true
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 "{enabled = 1; value = {parameters = (32, 49, 786432); type = standard;};}"
 
 # Trackpad tap to click (built-in and Bluetooth)
 defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
