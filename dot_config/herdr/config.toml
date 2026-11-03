@@ -5,3 +5,7 @@ name = "catppuccin"
 auto_switch = true
 light_name = "catppuccin-latte"
 dark_name = "catppuccin"
+
+# Ctrl+Space as a second prefix; Ctrl+b keeps working
+[keys]
+extra_prefixes = ["ctrl+space"]
