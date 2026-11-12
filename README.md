@@ -38,6 +38,8 @@ AWS skills and the AWS MCP server come from `aws configure agent-toolkit --yes` 
 
 Own skills live in [`dot_agents/skills/`](dot_agents/skills/) (`~/.agents/skills/`, read by Cursor and opencode). Claude Code needs a matching symlink in [`dot_claude/skills/`](dot_claude/skills/): a `symlink_<skill>` file containing `../../.agents/skills/<skill>`.
 
+Global agent instructions live in [`dot_config/agents/AGENTS.md`](dot_config/agents/AGENTS.md) (`~/.config/agents/AGENTS.md`), shared by Claude Code (imported from `dot_claude/CLAUDE.md`), opencode (symlinked from `dot_config/opencode/`) and cursor-agent.
+
 Managed configs live as chezmoi source files (`dot_zshrc`, `dot_config/...`). Add new ones with:
 
 ```bash
