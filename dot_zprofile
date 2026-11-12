@@ -1,3 +1,7 @@
+# The following lines were added by Docker Desktop to add commands to your PATH.
+export PATH="$PATH:/Users/johan/.docker/bin"
+# End of Docker Desktop section.
+
 # Loaded by login shells (every new terminal on macOS): PATH setup.
 # Lives here so it runs after macOS's /etc/zprofile reorders PATH.
 
