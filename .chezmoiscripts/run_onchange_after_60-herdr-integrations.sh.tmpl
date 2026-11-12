@@ -1,0 +1,11 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+{{ template "brew-env" . }}
+# herdr owns its hook files (it rewrites them on update), so they aren't tracked here.
+# Claude's settings.json already holds the hook entry in the exact form herdr writes,
+# so the install leaves it unchanged.
+mise exec herdr -- herdr integration install claude
+mise exec herdr -- herdr integration install opencode
+{{- end -}}
