@@ -11,6 +11,7 @@
     "padding": 0
   },
   "theme": "auto",
+  "outputStyle": "concise",
   "enabledPlugins": {
     "sentry@anthropic-plugin-directory": true
   }
