@@ -1,7 +1,3 @@
-# The following lines were added by Docker Desktop to add commands to your PATH.
-export PATH="$PATH:/Users/johan/.docker/bin"
-# End of Docker Desktop section.
-
 # Loaded by login shells (every new terminal on macOS): PATH setup.
 # Lives here so it runs after macOS's /etc/zprofile reorders PATH.
 
@@ -17,3 +13,8 @@ fi
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh --shims)"
 fi
+
+# Docker Desktop CLI tools. Docker Desktop re-adds this block if its markers are missing.
+# The following lines were added by Docker Desktop to add commands to your PATH.
+export PATH="$PATH:$HOME/.docker/bin"
+# End of Docker Desktop section.
