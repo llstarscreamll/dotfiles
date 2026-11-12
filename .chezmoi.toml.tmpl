@@ -1,0 +1,9 @@
+{{- $name := promptStringOnce . "name" "Full name (git)" -}}
+{{- $email := promptStringOnce . "email" "Personal email (git)" -}}
+{{- $workEmail := promptStringOnce . "workEmail" "Work email (git; used in ~/code/Ubits)" -}}
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    workEmail = {{ $workEmail | quote }}

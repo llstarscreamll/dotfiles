@@ -42,13 +42,9 @@ if ! command -v chezmoi >/dev/null 2>&1; then
   brew install chezmoi
 fi
 
-CONF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/chezmoi"
-mkdir -p "${CONF_DIR}"
-cat > "${CONF_DIR}/chezmoi.toml" <<EOF
-sourceDir = "${ROOT}"
-EOF
-
+# Generates ~/.config/chezmoi/chezmoi.toml from .chezmoi.toml.tmpl
+# (asks for name and emails only the first time), then applies.
 echo "Applying dotfiles from ${ROOT}..."
-chezmoi apply --source="${ROOT}" --verbose
+chezmoi init --source="${ROOT}" --apply --verbose
 
 echo "Done. Open Ghostty (or a new shell) to pick up mise + fonts."

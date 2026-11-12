@@ -8,7 +8,7 @@ Minimal [chezmoi](https://www.chezmoi.io/) setup for a new Mac: Homebrew package
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/llstarscreamll/dotfiles/master/bootstrap.sh)"
 ```
 
-That installs Homebrew (if needed), clones this repo to `~/.dotfiles`, installs chezmoi, and runs `chezmoi apply`.
+That installs Homebrew (if needed), clones this repo to `~/.dotfiles`, installs chezmoi, and runs `chezmoi init --apply`. The first run asks for your name, personal email and work email (stored in `~/.config/chezmoi/chezmoi.toml` from [`.chezmoi.toml.tmpl`](.chezmoi.toml.tmpl), used by the git config). It ends by generating an SSH key (see below).
 
 Already cloned locally? `./bootstrap.sh` from the repo root works the same.
 
