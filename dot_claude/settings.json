@@ -4,7 +4,7 @@
     "DISABLE_TELEMETRY": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
-  "includeCoAuthoredBy": false,
+  "attribution": { "commit": "", "pr": "", "sessionUrl": false },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
