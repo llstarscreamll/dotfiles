@@ -2,5 +2,22 @@
     name = {{ .name }}
     email = {{ .email }}
 
+[init]
+    defaultBranch = master
+[pull]
+    rebase = true
+[push]
+    autoSetupRemote = true
+[fetch]
+    prune = true
+[rebase]
+    autoStash = true
+[rerere]
+    enabled = true
+[diff]
+    algorithm = histogram
+[merge]
+    conflictStyle = zdiff3
+
 [includeIf "gitdir/i:~/code/Ubits/"]
     path = ~/.config/git/config-ubits
