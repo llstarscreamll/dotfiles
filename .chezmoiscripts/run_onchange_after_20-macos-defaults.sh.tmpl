@@ -2,6 +2,7 @@
 #!/bin/bash
 set -euo pipefail
 
+{{ template "brew-env" . }}
 echo "Configuring macOS defaults..."
 
 # Faster key repeat (disable press-and-hold for accents)
@@ -52,8 +53,21 @@ killall Dock || true
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 killall Finder || true
 
+# sudo only when something changes, so re-runs don't ask for the password
 # Never sleep the system on AC power so long tasks keep running (display still sleeps)
-sudo pmset -c sleep 0
+ac_sleep=$(pmset -g custom | awk '/^AC Power/{ac=1; next} /^[A-Za-z]/{ac=0} ac && $1=="sleep"{print $2}')
+if [ "$ac_sleep" != 0 ]; then
+  sudo pmset -c sleep 0
+fi
+
+# Touch ID for sudo; pam_reattach makes it work inside tmux/herdr.
+# sudo_local survives macOS updates (unlike /etc/pam.d/sudo).
+pam_reattach="$(brew --prefix)/lib/pam/pam_reattach.so"
+sudo_local="auth       optional       $pam_reattach ignore_ssh
+auth       sufficient     pam_tid.so"
+if [ "$(cat /etc/pam.d/sudo_local 2>/dev/null)" != "$sudo_local" ]; then
+  echo "$sudo_local" | sudo tee /etc/pam.d/sudo_local >/dev/null
+fi
 
 echo "macOS defaults applied."
 {{- end -}}

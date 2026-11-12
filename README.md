@@ -23,7 +23,7 @@ Already cloned locally? `./bootstrap.sh` from the repo root works the same.
 
 Ghostty uses **Catppuccin Mocha** (dark) / **Latte** (light) and follows the system appearance. tmux ([`dot_config/tmux/tmux.conf`](dot_config/tmux/tmux.conf)) uses only the terminal's ANSI colours, so it follows whatever theme Ghostty shows.
 
-Also applies: faster key repeat, disables Ctrl+Arrow Mission Control shortcuts, clears the Dock.
+Also applies: faster key repeat, disables Ctrl+Arrow Mission Control shortcuts, clears the Dock, Touch ID for `sudo` (`/etc/pam.d/sudo_local`, works inside tmux via `pam-reattach`).
 
 Scrolling: natural on the trackpad, classic on mice. macOS has one switch for both, so [LinearMouse](https://linearmouse.org/) reverses mouse scrolling ([`dot_config/linearmouse/linearmouse.json`](dot_config/linearmouse/linearmouse.json)). Grant it Accessibility access and enable "Start at login" once.
 
