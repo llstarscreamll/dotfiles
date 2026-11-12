@@ -40,6 +40,8 @@ Own skills live in [`dot_agents/skills/`](dot_agents/skills/) (`~/.agents/skills
 
 Global agent instructions live in [`dot_config/agents/AGENTS.md`](dot_config/agents/AGENTS.md) (`~/.config/agents/AGENTS.md`), shared by Claude Code (imported from `dot_claude/CLAUDE.md`), opencode (symlinked from `dot_config/opencode/`) and cursor-agent.
 
+Scripts share snippets from [`.chezmoitemplates/`](.chezmoitemplates/) (e.g. `{{ template "brew-env" . }}`).
+
 Managed configs live as chezmoi source files (`dot_zshrc`, `dot_config/...`). Add new ones with:
 
 ```bash
