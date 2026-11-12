@@ -1,0 +1,23 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+
+# SSH key for GitHub / Bitbucket. ~/.ssh/config (tracked) adds it to the agent
+# and keeps the passphrase in the macOS Keychain.
+key="$HOME/.ssh/id_ed25519"
+[ -f "$key" ] && exit 0
+
+echo "Generating SSH key (choose a passphrase; it's stored in the Keychain)..."
+ssh-keygen -t ed25519 -C "$(whoami)@$(hostname -s)" -f "$key"
+ssh-add --apple-use-keychain "$key"
+pbcopy < "$key.pub"
+
+cat <<'MSG'
+Public key copied to the clipboard. Paste it in:
+  https://github.com/settings/ssh/new
+  https://bitbucket.org/account/settings/ssh-keys/
+Then verify:
+  ssh -T git@github.com
+  ssh -T git@bitbucket.org
+MSG
+{{- end -}}
