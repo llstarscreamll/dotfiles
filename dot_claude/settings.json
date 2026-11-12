@@ -13,6 +13,7 @@
   "theme": "auto",
   "outputStyle": "concise",
   "enabledPlugins": {
-    "sentry@anthropic-plugin-directory": true
+    "sentry@anthropic-plugin-directory": true,
+    "mattpocock-skills@claude-plugins-official": true
   }
 }
