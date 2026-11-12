@@ -1,7 +1,17 @@
 # Loaded by interactive shells.
 
 # Completions (zsh built-ins + Homebrew's site-functions)
-autoload -Uz compinit && compinit
+# Full check (~200 ms) only when the dump is missing or older than a day;
+# otherwise load the cached ~/.zcompdump (-C, ~7 ms)
+autoload -Uz compinit
+zcompdump_stale=(~/.zcompdump(N.mh+24))
+if [[ ! -e ~/.zcompdump || -n $zcompdump_stale ]]; then
+  compinit
+  touch ~/.zcompdump  # compinit only rewrites it when completions change
+else
+  compinit -C
+fi
+unset zcompdump_stale
 zstyle ':completion:*' menu select
 # Case-insensitive matching: lowercase also matches uppercase, and vice versa
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -42,6 +52,11 @@ fi
 # Functions: one file per function, loaded on first use
 fpath=(~/.config/zsh/functions $fpath)
 autoload -Uz ~/.config/zsh/functions/*(N:t)
+
+# fzf: Ctrl-R history, Ctrl-T files, Alt-C cd
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 # Aliases
 [[ -r ~/.config/zsh/aliases.zsh ]] && source ~/.config/zsh/aliases.zsh
