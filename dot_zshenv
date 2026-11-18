@@ -3,3 +3,8 @@
 # Default editor (also used by git)
 export EDITOR=nvim
 export VISUAL=nvim
+
+# pnpm global packages (e.g. `staff` from staff-harness). mise shims are
+# prepended later by .zprofile/.zshrc, so they keep priority.
+export PNPM_HOME="$HOME/Library/pnpm"
+path=("$PNPM_HOME/bin" $path)
