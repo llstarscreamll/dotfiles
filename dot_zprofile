@@ -8,6 +8,11 @@ elif [ -x /usr/local/bin/brew ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
+# Keg-only database clients (psql, mysql).
+if [ -n "$HOMEBREW_PREFIX" ]; then
+  export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$HOMEBREW_PREFIX/opt/mysql-client/bin:$PATH"
+fi
+
 # mise shims, so tools resolve in non-interactive use;
 # .zshrc switches to full activation for interactive shells.
 if command -v mise >/dev/null 2>&1; then
