@@ -32,6 +32,8 @@ Scrolling: natural on the trackpad, classic on mice. macOS has one switch for bo
 1. Edit [`Brewfile`](Brewfile) (e.g. `cask "cursor"`, `brew "neovim"`).
 2. Run `chezmoi apply` (re-runs brew bundle; also updates `~/Brewfile`).
 
+Apps not on homebrew-cask live under [`homebrew/Casks/`](homebrew/Casks/) (e.g. [AgentBar](https://agentbar.greatpixels.com/)) and install on the same `chezmoi apply`.
+
 Agent skills (Claude Code, Cursor, opencode): add a `<repo> <skill>` line to [`Skillfile`](Skillfile) and run `chezmoi apply`.
 
 AWS skills and the AWS MCP server come from `aws configure agent-toolkit --yes` (run once by `chezmoi apply`). Update them with `aws agent-toolkit update-skill --all`; find more with `aws agent-toolkit search-skills --search-query <query> --region us-east-1`.

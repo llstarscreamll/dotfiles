@@ -4,8 +4,31 @@ set -euo pipefail
 
 {{ template "brew-env" . }}
 
+# Local casks (not on homebrew-cask) → tap dotfiles/local.
+# Fingerprints re-run this when a cask changes.
+# agentbar: {{ include "homebrew/Casks/agentbar.rb" | sha256sum }}
+casks_dir="{{ .chezmoi.sourceDir }}/homebrew/Casks"
+tap_dir="$(brew --repository)/Library/Taps/dotfiles/homebrew-local"
+if [[ -d "$casks_dir" ]]; then
+  mkdir -p "$tap_dir/Casks"
+  shopt -s nullglob
+  for cask in "$casks_dir"/*.rb; do
+    cp "$cask" "$tap_dir/Casks/"
+  done
+  shopt -u nullglob
+fi
+
 # Brewfile is embedded so this script re-runs whenever packages change.
 brew bundle --file=/dev/stdin <<'EOF'
 {{ include "Brewfile" -}}
 EOF
+
+if [[ -d "$tap_dir/Casks" ]]; then
+  shopt -s nullglob
+  for cask in "$tap_dir/Casks"/*.rb; do
+    name="$(basename "$cask" .rb)"
+    brew install --cask --quiet "dotfiles/local/${name}"
+  done
+  shopt -u nullglob
+fi
 {{- end -}}
