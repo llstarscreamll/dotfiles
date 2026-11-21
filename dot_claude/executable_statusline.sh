@@ -1,15 +1,16 @@
 #!/bin/bash
 # Claude Code status line:
-#   model · mode · dir  branch · ctx % · $cost · 5h % ↻ reset · 7d % ↻ reset
+#   model · mode · dir  branch · ctx % · ↑in ↓out tokens · $cost · 5h % ↻ reset · 7d % ↻ reset
 # Uses the terminal's ANSI colors (follows Ghostty's Catppuccin light/dark).
 # Plan usage (rate_limits) is only sent for claude.ai Pro/Max logins.
 
 input=$(cat)
 
-IFS=$'\x1f' read -r model effort fast style dir cost ctx h5 h5_reset d7 d7_reset < <(
+IFS=$'\x1f' read -r model effort fast style dir cost ctx tok_in tok_out h5 h5_reset d7 d7_reset < <(
   jq -r '[
     .model.display_name, .effort.level, .fast_mode, .output_style.name,
     .workspace.current_dir, .cost.total_cost_usd, .context_window.used_percentage,
+    .context_window.total_input_tokens, .context_window.total_output_tokens,
     .rate_limits.five_hour.used_percentage, .rate_limits.five_hour.resets_at,
     .rate_limits.seven_day.used_percentage, .rate_limits.seven_day.resets_at
   ] | map(. // "" | tostring) | join("\u001f")' <<<"$input"
@@ -28,6 +29,15 @@ pct() {
   printf '%s%s%%%s' "$color" "$p" "$reset"
 }
 
+# 1234 → 1.2k, 1234567 → 1.2M
+human() {
+  awk -v n="$1" 'BEGIN {
+    if (n >= 1e6) printf "%.1fM", n / 1e6
+    else if (n >= 1e3) printf "%.1fk", n / 1e3
+    else printf "%d", n
+  }'
+}
+
 out="$model"
 
 mode="$effort"
@@ -42,6 +52,7 @@ if [[ -n "$dir" ]]; then
 fi
 
 [[ -n "$ctx" ]] && out+="${sep}ctx $(pct "$ctx")"
+[[ -n "$tok_in$tok_out" ]] && out+="${sep}↑$(human "${tok_in:-0}") ↓$(human "${tok_out:-0}")"
 [[ -n "$cost" ]] && out+="${sep}$(printf '$%.2f' "$cost")"
 
 if [[ -n "$h5" ]]; then
